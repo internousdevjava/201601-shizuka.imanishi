@@ -38,7 +38,7 @@ public class KisoKadai3 {
 				case 1 :{
 					System.out.println("読み込むファイルの選択を行います。");
 					cdir=selectfile();
-					System.out.println("メインメニューに戻ります。");
+					System.out.println("出力が完了しました。\nメインメニューに戻ります。");
 					break;
 				}
 				case 2 :{
@@ -232,7 +232,7 @@ public class KisoKadai3 {
 			}
 
 			br.close();
-			System.out.println("----------------------------------\n出力が終了しました。");
+			System.out.println("----------------------------------");
 		}catch(FileNotFoundException e){
 			System.out.println("ファイルがありません。");
 		}catch(IOException e){
@@ -302,6 +302,8 @@ public class KisoKadai3 {
 						pw.println(input);
 					}
 					pw.close();
+					System.out.println("以下の内容で書き込みました。");
+					readfile(cdir);
 				}
 			}else{
 				System.out.println("このファイルには書き込みできません。");
@@ -310,17 +312,5 @@ public class KisoKadai3 {
 			System.out.println("エラーが発生しました");
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
