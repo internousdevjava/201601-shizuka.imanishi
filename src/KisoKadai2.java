@@ -20,7 +20,15 @@ public class KisoKadai2 {
 		System.out.println("1~100までの数字を10回以内に当てて下さい。\nヒント：「あと少し」と出たら5以内、「おしい」とでたら2以内に正解があります。");
 		for(int i=1;i<=10;i++){
 			System.out.println(massage);
-			input = new java.util.Scanner(System.in).nextInt();
+			while(true){
+				input = new java.util.Scanner(System.in).nextInt();
+				if(input<=100 && input>=1){
+					break;
+				}else {
+					System.out.println("1~100までの数字を入力し直してください。");
+				}
+			}
+
 			count++;
 			if(mondai==input){
 				System.out.println("正解!!");

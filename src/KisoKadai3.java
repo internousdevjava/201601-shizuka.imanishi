@@ -32,7 +32,7 @@ public class KisoKadai3 {
 		String cdir=null;
 		while ( end ){
 			System.out.println("テキストファイルに入出力します。以下のメニューを見て、1~3の数字を入力してください。");
-			System.out.println("【メインメニュー】\n1 : ファイルを出力します。\n2 : ファイルに入力します。\n3 : 終了します。");
+			System.out.println("【メインメニュー】\n1 : ファイルを出力します。\n2 : ファイルに入力します。\n3 : ファイルを新規作成します。\n4 : 終了します。");
 			menu = new java.util.Scanner(System.in).nextInt();
 			switch(menu){
 				case 1 :{
@@ -51,6 +51,12 @@ public class KisoKadai3 {
 					break;
 				}
 				case 3 :{
+					System.out.println("ファイルを新規作成するフォルダを選びます。");
+					cdir = makefile2();
+					break;
+				}
+
+				case 4 :{
 					System.out.println("終了します。");
 					end = false;
 					break;
@@ -69,8 +75,8 @@ public class KisoKadai3 {
 		String modori= null;
 
 		while(true){
-			System.out.println("使用するフォルダまたは、ファイルのパスを入力してください。\\は2つ入力してください。\n表示したリストから使用するフォルダ、ファイルを選べます。"
-					+ "0を入力すると、現在のフォルダにファイルを作成します（メインメニューに戻れます）。\n1を入力するとローカルディスクCに移動します。");
+			System.out.println("使用するフォルダまたは、ファイルのアドレスを入力してください。\\は2つ入力してください。\n表示したリストから使用するフォルダ、ファイルを選べます。"
+					+ "\n0を入力すると、現在のフォルダにファイルを作成します（メインメニューに戻れます）。\n1を入力するとローカルディスクCに移動します。");
 			cdir = new java.util.Scanner(System.in).nextLine();
 			if(cdir.equals("0")){
 				System.out.println("ファイルを新規作成します。");//メイクファイルメソッドに移動
@@ -184,7 +190,11 @@ public class KisoKadai3 {
 			while (true){
 				System.out.println("作成するファイル名を入力してください。\nファイル名には拡張子をつけてください(例 : text.txt)。");
 				String input = new java.util.Scanner(System.in).nextLine();
-				name = cdir +"\\" + input;
+				if(cdir.equals("0")){
+					name = input;
+				}else{
+					name = cdir +"\\" + input;
+				}
 				File newfile = new File(name);
 
 				try{
@@ -312,5 +322,53 @@ public class KisoKadai3 {
 			System.out.println("エラーが発生しました");
 		}
 	}
+		public static String makefile2(){
+			String cdir;
+			boolean sfend = true;
+			String modori= null;
+
+			while(true){
+				System.out.println("新規作成を行うフォルダのアドレスを入力してください。\\は2つ入力してください。\n表示したリストから使用するフォルダ、ファイルを選べます。\n"
+						+ "0を入力すると、現在のフォルダにファイルを作成します（メインメニューに戻れます）。\n1を入力するとローカルディスクCに移動します。");
+				cdir = new java.util.Scanner(System.in).nextLine();
+
+				if(cdir.equals("0")){
+					System.out.println("現在のフォルダにファイルを新規作成します。");//メイクファイルメソッドに移動
+					modori  = makefile(cdir);
+					sfend = false;
+					break;
+				}
+				if(cdir.equals("1")){
+					cdir = "c:\\";
+					break;
+				}
+				File cdirectory = new File(cdir);
+
+				//Fileチェック1：フォルダなら下に、ファイルならリードメソッド実行しメニューに、存在しない場合はMakeに移動する。
+				if(cdirectory.exists()){
+					if(cdirectory.isDirectory()){
+						System.out.println("入力されたフォルダに新規作成します。");
+						modori  = makefile(cdir);
+						sfend = false;
+						break;
+					}else if(cdirectory.isFile()){
+						System.out.println("それはファイルです。入力しなおしてください。");
+					}
+				}else{
+					System.out.println("入力されたフォルダは存在しません。現在のフォルダにファイルを新規作成しますか？");
+					System.out.println("1       : はい、新規作成します。\n1以外の整数 : いいえ、パスを入力しなおします。");
+					int sin= new java.util.Scanner(System.in).nextInt();
+					if(sin==1){
+						System.out.println("ファイルを新規作成します。");
+						modori = makefile(cdir);
+						sfend=false;
+						break;
+					}
+				}
+			}
+
+
+			return modori;
+		}
 
 }
