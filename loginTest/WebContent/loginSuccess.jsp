@@ -8,7 +8,7 @@
     <title>ようこそ</title>
 </head>
     <body>
-        <s:property value="id"/>さんこんにちは。
+        <s:property value="%{#session.id}"/>さんこんにちは。
 
     </body>
 </html>

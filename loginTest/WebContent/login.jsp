@@ -8,13 +8,16 @@
     <title>Login</title>
 </head>
     <body>
-sql test.sqlを実行して、test testでログイン
-        <h4>ログイン</h4>
-        <s:form action="LoginAction">
-            <p>ログインID<s:textfield label="ID" name="id" /></p>
-            <p>パスワード<s:password label="パスワード" name="poassword"/></p>
+		sqlフォルダのtest.sqlを実行して、test testでログイン
+		<br>
+		<s:property value="loginErrorMessage"/>	
+	
+ 		<h4>ログイン</h4>
+	    <s:form action="LoginAction">
+        <p>ログインID<s:textfield label="ID" name="id" /></p>
+        <p>パスワード<s:password label="パスワード" name="password"/></p>
             <s:submit value="ログイン"/>
         </s:form>
-
+        
     </body>
 </html>

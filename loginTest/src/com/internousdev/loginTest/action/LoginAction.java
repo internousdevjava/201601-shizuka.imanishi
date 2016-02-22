@@ -18,24 +18,45 @@ import com.opensymphony.xwork2.ActionSupport;
  **/
 public class LoginAction extends ActionSupport implements SessionAware{
 
+	/**
+	 * ログイン結果
+	 */
+    private boolean isLoginResult;
+    
+    /**
+     * ID
+     */
+    private String id;
+    
+    /**
+     * パスワード
+     */
+    private String password;
+    
+    /**
+     * ログインエラーメッセージ
+     */
+    private String loginErrorMessage;
+    
+    /**
+     * セッション
+     */
+    private Map<String,Object> session;
+
     /**
      * ログイン認証を行うメソッド
      * @param id ログインID
      * @param password パスワード
      * @return boolean ログイン成功ならtrue、失敗ならfalse
      */
-    private boolean loginResult;
-    private String id;
-    private String password;
-    private Map<String,Object> session;
-
-
     public String execute() {
 
         LoginDAO dao = new LoginDAO();
 
-        loginResult = dao.select(id,password);
-        if(!loginResult){
+        isLoginResult = dao.select(id,password);
+        
+        if(!isLoginResult){
+        	loginErrorMessage="IDまたはpasswordが誤っています。";
             return ERROR;
 
         }else{
@@ -45,33 +66,31 @@ public class LoginAction extends ActionSupport implements SessionAware{
     }
 
 
-    /**を格納する為のメソッド
-     * @param id
+    /**IDを格納する為のメソッド
+     * @param id ID
      */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**を格納する為のメソッド
-     * @param id
-     */
-    public String getId(String id) {
-        return id;
-    }
 
-
-    /**を格納する為のメソッド
-     * @param password
+    /**パスワードを格納する為のメソッド
+     * @param password パスワード
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
 
-    /* (非 Javadoc)
-     * @see org.apache.struts2.interceptor.SessionAware#setSession(java.util.Map)
-     */
-    @Override
+    /**ログインエラーメッセージを取得する為のメソッド
+	 * @return loginErrorMessage ログインエラーメッセージ 
+	 */
+	public String getLoginErrorMessage() {
+		return loginErrorMessage;
+	}
+
+
+	@Override
     public void setSession(Map<String, Object> session) {
         this.session = session;
 
